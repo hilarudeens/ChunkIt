@@ -53,7 +53,7 @@
 				cellsInColumn : 5, // Number of cells in grid column.
 				shrinkCellDimension : true, // Adjust cell dimension to fit range of endXY - startXY.
 				cropExtraSpaces : false, // Truncate extra/overflow spaces if any, this is automatically override by shrinkCellDimension option
-				shuffle: false, // Boolean value set for shuffle cropped images.
+				shuffle : false, // Boolean value set for shuffle cropped images.
 				gridCellWrapperTpl : '<li class="cell"></li>', // Cell image's wrapper template
 				gridRowWrapperTpl : '', // Row images wrapper template
 				gridBodyWrapperTpl : '<ul class="grid"></ul>',
@@ -84,6 +84,10 @@
 			var self = this;
 			self.elem = elem;
 			self.$elem = $(elem);
+
+			// Check and read image url from dom element.
+			options.imgURL = self.$elem.data('chunkit-imgurl') || options.imgURL;
+
 			self.options = $.extend({}, defaults, options);
 
 			// Check and update coordinates
