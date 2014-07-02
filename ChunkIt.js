@@ -46,7 +46,8 @@
 		init : function(elem, options) {
 			var defaults = {
 				imgURL : '', // Image url to fetch image from remote
-				maxContainerWidth : 500, // Set maximum possible grid width.
+				maxContainerWidth : 0, // Set maximum possible grid width.
+				scaleImage: false, // Adjust maximum width of image container(maxContainerWidth) based on image width.
 				startXY : [0, 0], // Set start point of cropping in image.
 				endXY : [0, 0], // Set end point of cropping in image. Zero is equivalent mention image's width and height.
 				cellsInRow : 5, // Number of cells in grid row.
@@ -95,7 +96,6 @@
 			self.options.startXY[1] = self._checkPositiveInterger(self.options.startXY[1]);
 			self.options.endXY[0] = self._checkPositiveInterger(self.options.endXY[0]);
 			self.options.endXY[1] = self._checkPositiveInterger(self.options.endXY[1]);
-			self.options.maxContainerWidth = self._checkPositiveInterger(self.options.maxContainerWidth) || 500;
 
 			self.$elem.on('imageLoad', self.options.onImageLoad);
 			self.$elem.on('getGridMetaData', self.options.onGetGridMetaData);
@@ -104,6 +104,17 @@
 			self.$elem.on('rowWrapping', self.options.onRowWrapping);
 			self.$elem.on('getGridElem', self.options.onGetGridElem);
 			self.$elem.on('afterFinish', self.options.onAfterFinish);
+			
+			// Override maxContainerWidth
+			self.$elem.on('imageLoad', function($event,self,$img){
+				var imgWidth = $img[0].width;
+				var maxContainerWidth = self.options.maxContainerWidth;
+				var scaleImage = self.options.scaleImage;
+				if(!scaleImage || maxContainerWidth === 0)
+					self.options.maxContainerWidth = imgWidth;
+				
+			});
+			
 
 			// Load image.
 			self.imageLoad();
