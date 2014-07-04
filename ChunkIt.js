@@ -1,7 +1,7 @@
 /**
  * NAME: ChunkIt
  *
- * VERSION: 0.0.1
+ * VERSION: 0.0.3
  *
  * AUTHOR: hilarudeens<hilar.udeen@gmail.com>
  *
@@ -47,7 +47,7 @@
 			var defaults = {
 				imgURL : '', // Image url to fetch image from remote
 				maxContainerWidth : 0, // Set maximum possible grid width.
-				scaleImage: false, // Adjust maximum width of image container(maxContainerWidth) based on image width.
+				scaleImage : false, // Adjust maximum width of image container(maxContainerWidth) based on image width.
 				startXY : [0, 0], // Set start point of cropping in image.
 				endXY : [0, 0], // Set end point of cropping in image. Zero is equivalent mention image's width and height.
 				cellsInRow : 5, // Number of cells in grid row.
@@ -104,17 +104,16 @@
 			self.$elem.on('rowWrapping', self.options.onRowWrapping);
 			self.$elem.on('getGridElem', self.options.onGetGridElem);
 			self.$elem.on('afterFinish', self.options.onAfterFinish);
-			
+
 			// Override maxContainerWidth
-			self.$elem.on('imageLoad', function($event,self,$img){
+			self.$elem.on('imageLoad', function($event, self, $img) {
 				var imgWidth = $img[0].width;
 				var maxContainerWidth = self.options.maxContainerWidth;
 				var scaleImage = self.options.scaleImage;
-				if(!scaleImage || maxContainerWidth === 0)
+				if (!scaleImage || maxContainerWidth === 0)
 					self.options.maxContainerWidth = imgWidth;
-				
+
 			});
-			
 
 			// Load image.
 			self.imageLoad();
