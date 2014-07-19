@@ -1,7 +1,7 @@
 /**
  * NAME: ChunkIt
  *
- * VERSION: 0.0.3
+ * VERSION: 0.0.4
  *
  * AUTHOR: hilarudeens<hilar.udeen@gmail.com>
  *
@@ -386,6 +386,10 @@
 					// Change image width based on container width
 					var ratio = (containerWidth / gridData.stdColumns) / gridData.stdCellWidth;
 					img.style.width = parseInt(ratio * clipWidth) + 'px';
+					
+					// Force the browser to take auto height.
+					// Done for IE9 and IE10 to avoid image stretch .
+					img.style.height = 'auto';
 
 					$cellElem = self._cellWrapping($(img)).attr('id', 'cell_' + gridsData[counter].id);
 					$cellHolder.append($cellElem);
