@@ -1,7 +1,7 @@
 /**
  * NAME: ChunkIt
  *
- * VERSION: 1.0.0
+ * VERSION: 1.0.1
  *
  * AUTHOR: hilarudeens<hilar.udeen@gmail.com>
  *
