@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>ChunkIt by hilarudeens</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">ChunkIt</h1>
+      <h2 class="project-tagline">Crop, Extract, De-sprite and Play</h2>
+      <a href="https://github.com/hilarudeens/ChunkIt" class="btn">View on GitHub</a>
+      <a href="https://github.com/hilarudeens/ChunkIt/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/hilarudeens/ChunkIt/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h2>
+<a id="welcome-words" class="anchor" href="#welcome-words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome words!</h2>
+
+<p>A jQuery plugin and image processing utility. This is useful when you are playing with images. This enables you to extract portion of image, crop, de-sprite and many more.</p>
+
+<h2>
+<a id="browser-requirements" class="anchor" href="#browser-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser Requirements</h2>
+
+<p>This plugin is using HTML5 canvas internally. Hence, It require IE9 or higher version and latest Mozilla, Chrome. Please read following url for <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas">browser support</a></p>
+
+<h2>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<ul>
+<li>imgURL</li>
+<li>maxContainerWidth</li>
+<li>scaleImage</li>
+<li>startXY</li>
+<li>endXY</li>
+<li>cellsInRow</li>
+<li>cellsInColumn</li>
+<li>shrinkCellDimension</li>
+<li>cropExtraSpaces</li>
+<li>shuffle</li>
+<li>gridCellWrapperTpl</li>
+<li>gridRowWrapperTpl</li>
+<li>gridBodyWrapperTpl</li>
+</ul>
+
+<h2>
+<a id="callbacks" class="anchor" href="#callbacks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Callbacks</h2>
+
+<ul>
+<li>onImageLoad : function($event, currentObj, $imageElem) </li>
+<li>onGetGridMetaData : function($event, currentObj, gridData)</li>
+<li>onShuffleCoordinates : function($event, currentObj, gridData)</li>
+<li>onCellWrapping : function($event, currentObj, $wrappedCellElem, $wrappedParentElem)</li>
+<li>onRowWrapping : function($event, currentObj, $wrappedRowElem, $wrappedParentElem)</li>
+<li>onGetGridElem : function($event, currentObj, $gridElem)</li>
+<li>onAfterFinish : function($event, currenObj)</li>
+</ul>
+
+<h2>
+<a id="events" class="anchor" href="#events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Events</h2>
+
+<ul>
+<li>imageLoad</li>
+<li>getGridMetaData</li>
+<li>shuffleCoordinates</li>
+<li>cellWrapping</li>
+<li>rowWrapping</li>
+<li>getGridElem</li>
+<li>afterFinish</li>
+</ul>
+
+<h2>
+<a id="options-1" class="anchor" href="#options-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<h2>
+<a id="imgurl" class="anchor" href="#imgurl" aria-hidden="true"><span class="octicon octicon-link"></span></a>imgURL</h2>
+
+<p><strong>Type:</strong> String | <strong>Default:</strong> ''</p>
+
+<p>This is act as a source for ChunkIt. It can be either remote url or base64 encoded data url. This is used to feed image data. Alternative, User can feed image url from DOM elements. It reads <code>data-chunkit-imgurl="images/&lt;img-name&gt;"</code>.</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({
+    imgURL : 'images/someImage.jpg'
+});</code>
+<code>// OR</code>
+<code>// ChunkIt url in inline &lt;div class="selector" data-chunkit-imgurl="images/shuffle.jpg" &gt;&lt;/div&gt;</code>
+<code>$('.selector').chunkIt();</code></p>
+
+<h2>
+<a id="maxcontainerwidth" class="anchor" href="#maxcontainerwidth" aria-hidden="true"><span class="octicon octicon-link"></span></a>maxContainerWidth</h2>
+
+<p><strong>Type:</strong> Number | <strong>Default:</strong> 0</p>
+
+<p>This option specifies grid or table maximum possible width. This is used to adjust the cropped image cells width to fit container. It is doing intelligent calculation based on number of cells in a row and width of each cells to make perfect grid option.</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({
+    maxContainerWidth: 300 /* equivalent to 300px */
+});</code></p>
+
+<h2>
+<a id="scaleimage" class="anchor" href="#scaleimage" aria-hidden="true"><span class="octicon octicon-link"></span></a>scaleImage</h2>
+
+<p><strong>Type:</strong> Boolean | <strong>Default:</strong> false</p>
+
+<p>This is set to automatically adjust maximum width of image container(maxContainerWidth) based on image width. If this options is true, then maxContainerWidth become disabled internally.</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({
+    scaleImage: true
+});</code></p>
+
+<h2>
+<a id="startxy" class="anchor" href="#startxy" aria-hidden="true"><span class="octicon octicon-link"></span></a>startXY</h2>
+
+<p><strong>Type:</strong> Array | <strong>Default:</strong> [0, 0] <code>-&gt; [top, left]</code></p>
+
+<p>Sets starting point to crop image. The default indicates the left-top corner of the image. It can be vary from [0, 0] to [image-width, image-height]. Array should contain any positive number. Any invalid or negative automatically turns into [0, 0].</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({
+    startXY: [50,50] /* equivalent to [50px from top, 50px from left] */ 
+});</code></p>
+
+<h2>
+<a id="endxy" class="anchor" href="#endxy" aria-hidden="true"><span class="octicon octicon-link"></span></a>endXY</h2>
+
+<p><strong>Type:</strong> Array | <strong>Default:</strong> [0, 0] <code>is equivalent to [&lt;image width&gt;, &lt;image height&gt;]</code></p>
+
+<p>This option sets end point to crop image. The default indicates the right-bottom corner of the image. It can be vary from [, ] to [, ]. Array should contain any positive number. Any invalid or negative automatically turns into <code>[&lt;image width&gt;, &lt;image height&gt;]</code>.</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({
+    endXY: [50,50] /* equivalent to 50px from top and 50px from left */
+});</code></p>
+
+<h2>
+<a id="cellsinrow" class="anchor" href="#cellsinrow" aria-hidden="true"><span class="octicon octicon-link"></span></a>cellsInRow</h2>
+
+<p><strong>Type:</strong> Number | <strong>Default:</strong> 5 </p>
+
+<p>This option specifies number of cell in a row. This is directly affect cells width. Default option forces the cell width to take image’s width.</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({ cellsInRow: 5});</code></p>
+
+<h2>
+<a id="cellsincolumn" class="anchor" href="#cellsincolumn" aria-hidden="true"><span class="octicon octicon-link"></span></a>cellsInColumn</h2>
+
+<p><strong>Type:</strong> Number | <strong>Default:</strong> 5</p>
+
+<p>This option specifies number of cell in a row. This is directly affect cells width. Default option forces the cell width to take image’s width.</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({ cellsInColumn: 5});</code></p>
+
+<h2>
+<a id="shrinkcelldimension" class="anchor" href="#shrinkcelldimension" aria-hidden="true"><span class="octicon octicon-link"></span></a>shrinkCellDimension</h2>
+
+<p><strong>Type:</strong> Boolean | <strong>Default:</strong> true</p>
+
+<p>This option forces endXY to image’s width and height when endXY set greater than image dimension. This option avoids excess white space in right and bottom side of cropped region. This is internally override the option cropExtraSpaces:true.
+This option ensures all the cropped cells dimensions are equal. </p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({
+    shrinkCellDimension: true
+});</code></p>
+
+<h2>
+<a id="cropextraspaces" class="anchor" href="#cropextraspaces" aria-hidden="true"><span class="octicon octicon-link"></span></a>cropExtraSpaces</h2>
+
+<p><strong>Type:</strong> Boolean | <strong>Default:</strong> false</p>
+
+<p>This option forces endXY to image’s width and height when endXY set greater than image dimension. Unlike shrinkCellDimension, it is adjusting cells dimension which are in image edge. That is, cells are cropped from right and bottom portion of image.</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({￼￼￼
+    cropExtraSpaces: true
+});</code></p>
+
+<h2>
+<a id="shuffle" class="anchor" href="#shuffle" aria-hidden="true"><span class="octicon octicon-link"></span></a>shuffle</h2>
+
+<p><strong>Type:</strong> Boolean | <strong>Default:</strong> false</p>
+
+<p>This option plots cropped cell in random order. This is optional and creative option. And it is recommended to use when shrinkCellDimension is set with true.</p>
+
+<p><strong>Code Example:</strong>
+<code>$('.selector').chunkIt({
+    shrinkCellDimension: true /* This option should be true shuffle: true */
+});</code></p>
+
+<h2>
+<a id="gridcellwrappertpl" class="anchor" href="#gridcellwrappertpl" aria-hidden="true"><span class="octicon octicon-link"></span></a>gridCellWrapperTpl</h2>
+
+<p><strong>Type:</strong> String | <strong>Default:</strong> <code>'&lt;li class="cell"&gt;&lt;/li&gt;'</code></p>
+
+<p>Provide helper functionality to customized HTML element wrapper template. Default option creates list tag wrapped around cropped image portion.</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({
+    gridCellWrapperTpl: '&lt;div class=”customClass” customAttribute=”attrVal” &gt;&lt;/div&gt;'
+});</code></p>
+
+<h2>
+<a id="gridrowwrappertpl" class="anchor" href="#gridrowwrappertpl" aria-hidden="true"><span class="octicon octicon-link"></span></a>gridRowWrapperTpl</h2>
+
+<p><strong>Type:</strong> String | <strong>Default:</strong> ''</p>
+
+<p>Provide helper functionality to customized HTML element wrapper template. It creates the parent HTML element for gridCellWrapperTpl templates along with cropped image portions.
+￼￼
+<strong>Code Example:</strong></p>
+
+<p><code>$('.selector').chunkIt({
+    gridRowWrapperTpl: '&lt;p class=”customClass” customAttribute=”attrVal” &gt;&lt;/p&gt;'
+});</code></p>
+
+<h2>
+<a id="gridbodywrappertpl" class="anchor" href="#gridbodywrappertpl" aria-hidden="true"><span class="octicon octicon-link"></span></a>gridBodyWrapperTpl</h2>
+
+<p><strong>Type: String</strong> | <strong>Default:</strong> <code>'&lt;ul class="grid"&gt;&lt;/ul&gt;'</code></p>
+
+<p>Provide helper functionality to customized HTML element wrapper template. It creates the parent HTML element for gridRowWrapperTpl templates along with cropped image portions.</p>
+
+<p><strong>Code Example:</strong></p>
+
+<p>$('.selector').chunkIt({
+    gridBodyWrapperTpl: '</p><div></div>'
+});
+
+<h2>
+<a id="callbacks-1" class="anchor" href="#callbacks-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Callbacks</h2>
+
+<h2>
+<a id="onimageload--functionevent-currentobj-imageelem" class="anchor" href="#onimageload--functionevent-currentobj-imageelem" aria-hidden="true"><span class="octicon octicon-link"></span></a>onImageLoad : function($event, currentObj, $imageElem)</h2>
+
+<p>This callback function will be executed after image load.</p>
+
+<p><strong>Code Example</strong></p>
+
+<p><code>$('.selector').chunkIt({
+    onImageLoad: function($event, currentObj, $imageElem){
+        console.log($imageElem.attr('src'));
+    }
+});</code></p>
+
+<h2>
+<a id="ongetgridmetadata--functionevent-currentobj-griddata" class="anchor" href="#ongetgridmetadata--functionevent-currentobj-griddata" aria-hidden="true"><span class="octicon octicon-link"></span></a>onGetGridMetaData : function($event, currentObj, gridData)</h2>
+
+<p>This callback function will be executed after generating cropping co-ordinates.</p>
+
+<h2>
+<a id="onshufflecoordinates--functionevent-currentobj-griddata" class="anchor" href="#onshufflecoordinates--functionevent-currentobj-griddata" aria-hidden="true"><span class="octicon octicon-link"></span></a>onShuffleCoordinates : function($event, currentObj, gridData)</h2>
+
+<p>This callback function will be executed on after shuffle done.</p>
+
+<h2>
+<a id="oncellwrapping--functionevent-currentobj-wrappedcellelem-wrappedparentelem" class="anchor" href="#oncellwrapping--functionevent-currentobj-wrappedcellelem-wrappedparentelem" aria-hidden="true"><span class="octicon octicon-link"></span></a>onCellWrapping : function($event, currentObj, $wrappedCellElem, $wrappedParentElem)</h2>
+
+<p>This callback function will be executed on wrapping cell DOM element by using wrapper template.</p>
+
+<h2>
+<a id="onrowwrapping--functionevent-currentobj-wrappedrowelem-wrappedparentelem" class="anchor" href="#onrowwrapping--functionevent-currentobj-wrappedrowelem-wrappedparentelem" aria-hidden="true"><span class="octicon octicon-link"></span></a>onRowWrapping : function($event, currentObj, $wrappedRowElem, $wrappedParentElem)</h2>
+
+<p>This callback function will be executed on wrapping row DOM elements by using wrapper template.</p>
+
+<h2>
+<a id="ongetgridelem--functionevent-currentobj-gridelem" class="anchor" href="#ongetgridelem--functionevent-currentobj-gridelem" aria-hidden="true"><span class="octicon octicon-link"></span></a>onGetGridElem : function($event, currentObj, $gridElem)</h2>
+
+<p>This callback function will be executed on generating grids DOM element.</p>
+
+<h2>
+<a id="onafterfinish--functionevent-currenobj" class="anchor" href="#onafterfinish--functionevent-currenobj" aria-hidden="true"><span class="octicon octicon-link"></span></a>onAfterFinish : function($event, currenObj)</h2>
+
+<p>This callback function will be executed on after inserting grid in <strong>document</strong> object.</p>
+
+<h2>
+<a id="events-1" class="anchor" href="#events-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Events</h2>
+
+<p>Events are respective to callback. In real, the callbacks in option are interlly attached events. The only difference is, option define callbacks takes precedence than externall attached events. </p>
+
+<h2>
+<a id="imageload" class="anchor" href="#imageload" aria-hidden="true"><span class="octicon octicon-link"></span></a>imageLoad</h2>
+
+<p>This imageLoad event will be triggered after image load.</p>
+
+<p><strong>Code Example</strong></p>
+
+<p><code>$('.selector').on('imageLoad', function($event, currentObj, $imageElem){
+    console.log($imageElem.attr('src'));
+});</code></p>
+
+<h2>
+<a id="getgridmetadata" class="anchor" href="#getgridmetadata" aria-hidden="true"><span class="octicon octicon-link"></span></a>getGridMetaData</h2>
+
+<p>This getGridMetaData event will be triggered after generating cropping co-ordinates.</p>
+
+<h2>
+<a id="shufflecoordinates" class="anchor" href="#shufflecoordinates" aria-hidden="true"><span class="octicon octicon-link"></span></a>shuffleCoordinates</h2>
+
+<p>This shuffleCoordinates event will be triggered on after shuffle done.</p>
+
+<h2>
+<a id="cellwrapping" class="anchor" href="#cellwrapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>cellWrapping</h2>
+
+<p>This cellWrapping event will be triggered on wrapping cell DOM element by using wrapper template.</p>
+
+<h2>
+<a id="rowwrapping" class="anchor" href="#rowwrapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>rowWrapping</h2>
+
+<p>This rowWrapping event will be triggered on wrapping row DOM elements by using wrapper template.</p>
+
+<h2>
+<a id="getgridelem" class="anchor" href="#getgridelem" aria-hidden="true"><span class="octicon octicon-link"></span></a>getGridElem</h2>
+
+<p>This getGridElem event will be triggered on generating grids DOM element.</p>
+
+<h2>
+<a id="afterfinish" class="anchor" href="#afterfinish" aria-hidden="true"><span class="octicon octicon-link"></span></a>afterFinish</h2>
+
+<p>This afterFinish event will be triggered on after inserting grid in <strong>document</strong> object.</p>
+
+<h2>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p>Hilarudeen Sheik Allaudeen(<a href="https://github.com/hilarudeens" class="user-mention">@hilarudeens</a>)</p>
+
+<p><a href="hilar.udeen@gmail.com">Email</a></p>
+
+<h2>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h2>
+
+<p>Please open the issues in <a href="https://github.com/hilarudeens/ChunkIt/issues">GitHub</a></p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>The MIT License <a href="https://github.com/hilarudeens/ChunkIt/blob/master/LICENSE">MIT</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/hilarudeens/ChunkIt">ChunkIt</a> is maintained by <a href="https://github.com/hilarudeens">hilarudeens</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
