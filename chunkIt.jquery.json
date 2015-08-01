@@ -1,13 +1,13 @@
 {
 	"name": "chunkIt",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"title": "Chunk It - Crop and Gridify the Image",
 	"description": "jQuery plugin for image crop and custom UI rendering and merging them with any jQuery plugin and any kind of javascript event handler.",
 	"keywords": ["Image", "Grid", "Shuffle", "Crop", "Chop", "Chunk", "Table", "Scale"],
 	"author": {
 		"name": "hilarudeens",
 		"email": "hilar.udeen@gmail.com",
-		"url": "http://askhds.blogspot.in"
+		"url": "http://pointerstack.com"
 	},
 	"licenses": [
 		{
@@ -17,5 +17,13 @@
 	],
 	"dependencies": {
 		"jquery": ">=1.8"
+	},
+	"homepage": "http://hilarudeens.github.io/ChunkIt",
+	"demo": "http://hilarudeens.github.io/ChunkIt",
+	"bugs": "https://github.com/hilarudeens/ChunkIt/issues",
+	"maintainers": {
+		"name": "hilarudeens",
+		"email": "hilar.udeen@gmail.com",
+		"url": "http://pointerstack.com"
 	}
 }
